@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Traits;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Route;
 
 trait FilterByUser
 {
@@ -14,7 +15,7 @@ trait FilterByUser
             });
 
             $currentUser = Auth::user();
-            if (!$currentUser) return;
+            if (!$currentUser || Route::getCurrentRoute()->uri() == '/') return;
             $canSeeAllRecordsRoleId = config('app_service.can_see_all_records_role_id');
             $modelName = class_basename(self::class);
 
